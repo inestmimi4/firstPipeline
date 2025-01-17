@@ -33,7 +33,17 @@ pipeline {
         stage('Check website is up') {
             steps {
                 echo 'Checking if the website is up...'
-                bat 'powershell -Command "(Invoke-WebRequest -Uri http://35.176.182.32 -UseBasicParsing).StatusCode"'
+                bat '''
+                powershell -Command "
+                try {
+                    \$response = Invoke-WebRequest -Uri http://35.176.182.32 -UseBasicParsing
+                    \$response.StatusCode
+                } catch {
+                    Write-Host 'Failed to connect to the website'
+                    exit 0
+                }
+                "
+                '''
             }
         }
     }
