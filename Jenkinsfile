@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    options {
+        disableConcurrentBuilds()
+    }
+    triggers {
+        pollSCM('* * * * *') // Polls the SCM every minute
+    }
     stages {
         stage('Clone the repo') {
             steps {
