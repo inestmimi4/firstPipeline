@@ -33,7 +33,7 @@ pipeline {
         stage('Check website is up') {
             steps {
                 echo 'Checking if the website is up...'
-                bat 'curl -Is 35.176.182.32 | head -n 1'
+                bat 'powershell -Command "(Invoke-WebRequest -Uri http://35.176.182.32 -UseBasicParsing).StatusCode"'
             }
         }
     }
