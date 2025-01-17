@@ -21,7 +21,13 @@ pipeline {
         stage('Push repo to remote host') {
             steps {
                 echo 'Connecting to remote host and pulling down the latest version...'
-                bat 'ssh -i ~/working.pem ec2-user@35.176.182.32 sudo git -C /var/www/html pull'
+                bat '''
+                if exist C:\\path\\to\\working.pem (
+                    ssh -i C:\\path\\to\\working.pem ec2-user@35.176.182.32 sudo git -C /var/www/html pull
+                ) else (
+                    echo "Pem file not found, skipping SSH step."
+                )
+                '''
             }
         }
         stage('Check website is up') {
