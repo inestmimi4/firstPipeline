@@ -10,8 +10,12 @@ pipeline {
         stage('Clone the repo') {
             steps {
                 echo 'Cloning the repository...'
-                bat 'rmdir /S /Q html'
-                bat 'git clone https://github.com/inestmimi4/firstPipeline.git'
+                bat '''
+                if exist html (
+                    rmdir /S /Q html
+                )
+                git clone https://github.com/inestmimi4/firstPipeline.git
+                '''
             }
         }
         stage('Push repo to remote host') {
